@@ -15,18 +15,18 @@ const getDate = () => {
 }
 
 const registerToRedis = async (key, value) => {
-  try {await db.start()} catch (e) {console.log(`[${getDate()}] OYENTE: A new request to open DB Socket denied.`)}
+  try {await db.start()} catch (e) {console.log(`[${getDate()}] OYENTE: ${e}`)}
   const receipt = await db.setValue(key, value)
   if (receipt === true) {
     console.log(`[${getDate()}] OYENTE: Transaction ID ${key} saved to database`)
   }
-  try {await db.stop()} catch (e) {console.log(`[${getDate()}] OYENTE: A new request to close DB Socket denied.`)}
+  try {await db.stop()} catch (e) {console.log(`[${getDate()}] OYENTE: ${e}`)}
 }
 
 const checkTxStatus = async (key) => {
-  try {await db.start()} catch (e) {console.log(`[${getDate()}] OYENTE: A new request to open DB Socket denied.`)}
+  try {await db.start()} catch (e) {console.log(`[${getDate()}] OYENTE: ${e}`)}
   const data = await db.getValue(key)
-  try {await db.stop()} catch (e) {console.log(`[${getDate()}] OYENTE: A new request to close DB Socket denied.`)}
+  try {await db.stop()} catch (e) {console.log(`[${getDate()}] OYENTE: ${e}`)}
   return data
 }
 

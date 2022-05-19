@@ -19,12 +19,12 @@ const contract = new ethers.Contract(
 )
 
 const registerToRedis = async (key, value) => {
-  await db.start()
+  try {await db.start()} catch (e) {console.log(`[${getDate()}] OYENTE: ${e}`)}
   const receipt = await db.setValue(key, value)
   if (receipt === true) {
-    console.log(`[${getDate()}] OYENTE: Transaction ID ${key} updated on database`)
+    console.log(`[${getDate()}] OYENTE: Transaction ID ${key} updated to database`)
   }
-  await db.stop()
+  try {await db.stop()} catch (e) {console.log(`[${getDate()}] OYENTE: ${e}`)}
 }
 
 const fillSwap = async (
@@ -36,7 +36,7 @@ const fillSwap = async (
   fromChain,
   data) => {
   try {
-    contract.fillSwapRequest(
+    await contract.fillSwapRequest(
       txHash,
       token,
       toAddress,
